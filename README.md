@@ -36,12 +36,11 @@ pip install argparse pytube
 ### Usage
 
 ```
-python yt_down.py [-h] [-s | -l] [-v | -a] [-c] [-o] <youtube_url>
+python yt_down.py [-s | -l] [-v | -a] [-c] [-o] <youtube_url>
 ```
 
 #### Arguments
 
-- `-h`, `--help`: Show the help message and exit.
 - `-s`, `--single`: Download a single video.
 - `-l`, `--list`: Download a playlist.
 - `-v`, `--video`: Download the video.
@@ -54,17 +53,17 @@ python yt_down.py [-h] [-s | -l] [-v | -a] [-c] [-o] <youtube_url>
 
 1. Download a single video as a video:
    ```
-   python yt_down.py -s -v https://www.youtube.com/watch?v=dQw4w9WgXcQ
+   python yt_down.py -s -v "https://youtu.be/dQw4w9WgXcQ?si=R60mVlzUdkIeGPDT"
    ```
 
 2. Download a playlist as audio:
    ```
-   python yt_down.py -l -a https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
+   python yt_down.py -l -a "https://youtube.com/playlist?list=PLCiNIjl_KpQhFwQA3G19w1nmhEOlZQsGF&si=TDDKF0DLgGXDrJqq"
    ```
 
 3. Download a single video with subtitles:
    ```
-   python yt_down.py -s -c https://www.youtube.com/watch?v=dQw4w9WgXcQ
+   python yt_down.py -s -c "https://youtu.be/bknUn7yMwNI?si=4ll2qL6s2VLjsJ4a"
    ```
 
 4. Download subtitles only for a single video:
@@ -81,6 +80,8 @@ The `download_youtube` function is the main function that handles the download p
 The `progress_function` is a callback function that is registered with the `YouTube` object to display the download progress.
 
 The script also handles age-restricted videos and replaces any invalid characters in the video titles to ensure proper file naming.
+
+Note: the caption part is not working now, so you can omit example 3 and 4.
 
 
 ## Chinese Converter (chinese_converter.py)
