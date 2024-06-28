@@ -1,6 +1,6 @@
-# Useful Tools
+# Useful Tools <!-- omit in toc -->
 
-## Table of Content
+## Table of Content <!-- omit in toc -->
 
 - [YouTube Downloader (yt\_down.py)](#youtube-downloader-yt_downpy)
   - [Dependencies](#dependencies)
@@ -15,6 +15,20 @@
     - [Convert a single text file](#convert-a-single-text-file)
     - [Convert all EPUB and text files in a directory](#convert-all-epub-and-text-files-in-a-directory)
   - [How it Works](#how-it-works-1)
+- [Image Viewer and Coordinate Marker (find\_coord.py)](#image-viewer-and-coordinate-marker-find_coordpy)
+  - [Usage](#usage-2)
+  - [Arguments](#arguments-1)
+  - [Controls](#controls)
+  - [Examples](#examples-1)
+- [Video Frame Extractor (get\_frame.py)](#video-frame-extractor-get_framepy)
+  - [Usage](#usage-3)
+  - [Arguments](#arguments-2)
+  - [Examples](#examples-2)
+- [Camera Capture and Image Saver (image\_capture.py)](#camera-capture-and-image-saver-image_capturepy)
+  - [Usage](#usage-4)
+  - [Arguments](#arguments-3)
+  - [Controls](#controls-1)
+  - [Examples](#examples-3)
 
 ## YouTube Downloader (yt_down.py)
 
@@ -142,3 +156,117 @@ The script has three main functions:
 
 The script uses an argument parser to accept different command-line arguments for converting single files or directories.
 
+## Image Viewer and Coordinate Marker (find_coord.py)
+
+This script allows users to view an image, optionally resize it, mark coordinates with mouse clicks, and save the marked image.
+
+### Usage
+
+```
+python3 find_coord.py <image_path> [--resize] [--ratio RATIO]
+```
+
+### Arguments
+
+- `image_path`: Path to the image file
+- `--resize`: Optional flag to resize the image
+- `--ratio RATIO`: Resize ratio (default: 0.5)
+
+### Controls
+
+- Left Mouse Click: Mark a point on the image
+- 's' key: Save the current marked image
+- 'q' key: Quit the program
+
+### Examples
+
+1. View original image:
+   ```
+   python3 find_coord.py path/to/image.jpg
+   ```
+
+2. View resized image (50% of original size):
+   ```
+   python3 find_coord.py path/to/image.jpg --resize
+   ```
+
+3. View resized image with custom ratio (75% of original size):
+   ```
+   python3 find_coord.py path/to/image.jpg --resize --ratio 0.75
+   ```
+
+Note: Coordinates displayed are always relative to the original image size.
+
+## Video Frame Extractor (get_frame.py)
+
+This script extracts a specific frame from a video file based on the given time and saves it as an image.
+
+### Usage
+
+```
+python3 get_frame.py -v VIDEO_PATH -t TIME_IN_SECONDS [-o OUTPUT_DIRECTORY]
+```
+
+### Arguments
+
+- `-v`, `--video VIDEO_PATH`: Path to the input video file
+- `-t`, `--time TIME_IN_SECONDS`: Time in seconds at which to extract the frame
+- `-o`, `--output OUTPUT_DIRECTORY`: Directory to save the extracted frame (default: current directory)
+
+### Examples
+
+1. Extract frame at 41 seconds and save in the current directory:
+   ```
+   python3 get_frame.py -v path/to/video.mp4 -t 41
+   ```
+
+2. Extract frame at 30 seconds and save in a specific directory:
+   ```
+   python3 get_frame.py -v path/to/video.mp4 -t 30 -o path/to/save/directory
+   ```
+
+Note: Ensure the specified time is within the duration of the video.
+
+## Camera Capture and Image Saver (image_capture.py)
+
+This script allows users to capture images from a camera and save them to a specified directory.
+
+### Usage
+
+```
+python3 image_capture.py [-c CAMERA_INDEX] [-s SAVE_DIRECTORY]
+```
+
+### Arguments
+
+- `-c CAMERA_INDEX`: Camera index to use (default: 0)
+- `-s SAVE_DIRECTORY`: Directory to save captured images (default: './images')
+
+### Controls
+
+- 's' key: Save the current frame as an image
+- 'q' key: Quit the program
+
+### Examples
+
+1. Use default camera and save location:
+   ```
+   python3 image_capture.py
+   ```
+
+2. Use a specific camera (e.g., camera index 1):
+   ```
+   python3 image_capture.py -c 1
+   ```
+
+3. Specify a custom save directory:
+   ```
+   python3 image_capture.py -s my_captures
+   ```
+
+4. Use a specific camera and custom save directory:
+   ```
+   python3 image_capture.py -c 2 -s custom_folder
+   ```
+
+Note: Ensure the specified camera is available on your system.

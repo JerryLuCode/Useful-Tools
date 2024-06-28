@@ -2,6 +2,7 @@ import os
 import opencc
 import argparse
 import ebooklib
+from lxml import etree
 from ebooklib import epub
 
 def convert_simplified_to_traditional_epub(epub_path):
@@ -9,7 +10,7 @@ def convert_simplified_to_traditional_epub(epub_path):
     book = epub.read_epub(epub_path)
 
     # Initialize the converter
-    converter = opencc.OpenCC('s2t')
+    converter = opencc.OpenCC('s2hk')
 
     # Loop through all the items in the EPUB file
     for item in book.get_items():
@@ -19,11 +20,34 @@ def convert_simplified_to_traditional_epub(epub_path):
             converted = converter.convert(content)
             item.content = converted.encode('utf-8')
 
+    # Update the table of contents
+    toc_item = book.get_item_with_id('ncx')
+    if toc_item:
+        toc_content = toc_item.get_content()
+        toc_tree = etree.fromstring(toc_content)
+        update_toc_content(toc_tree, converter)
+        toc_item.content = etree.tostring(toc_tree, encoding='utf-8', xml_declaration=False)
+
     # Write the converted content to a new EPUB file
     new_epub_path = os.path.splitext(epub_path)[0] + '_traditional.epub'
     epub.write_epub(new_epub_path, book)
 
     print(f"Converted EPUB is saved as {new_epub_path}")
+
+# Helper function to update the table of contents content
+def update_toc_content(toc_tree, converter):
+    # Update the text content of the table of contents
+    for element in toc_tree.iter():
+        if element.text:
+            element.text = converter.convert(element.text)
+        if element.tail:
+            element.tail = converter.convert(element.tail)
+
+    # Update the href attributes in the table of contents
+    for element in toc_tree.iter('content'):
+        href = element.get('src')
+        if href:
+            element.set('src', converter.convert(href))
 
 def convert_simplified_to_traditional_text(input_file, output_file):
     # Convert encoding from Guobiao (GBK) to UTF-8
